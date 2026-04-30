@@ -1,0 +1,4 @@
+- Hilbert metric contraction excluded from core proof
+- Byzantine model assumes bounded score interval [m,M]
+- No continuous-time stochastic noise
+- Spectral gap γ assumed fixed
