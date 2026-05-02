@@ -1,10 +1,8 @@
 \documentclass{article}
 
-\usepackage{amsmath, amssymb, amsfonts}
-\usepackage{graphicx}
-\usepackage{hyperref}
+\input{packages}
 
-\title{Gravit Truth Consensus: A Contractive Bayesian Gossip Framework for Byzantine-Robust Distributed Inference}
+\title{Gravit Truth Consensus: A Contractive Bayesian Gossip Framework for Distributed Truth Inference}
 
 \author{Gravit Network}
 
@@ -13,120 +11,138 @@
 \maketitle
 
 \begin{abstract}
-We introduce a distributed inference framework for recovering latent truth under adversarial noise. We model truth as a hidden variable in a probabilistic generative model and propose a contractive operator combining Bayesian multiplicative updates with gossip-based consensus. We prove exponential convergence to the Bayesian posterior under bounded likelihood assumptions and establish robustness guarantees under Byzantine corruption. Empirical results demonstrate stability across network topologies and adversarial ratios.
+We study distributed truth inference under noisy and adversarial conditions. We propose a contractive Bayesian gossip operator and characterize the class of admissible distributed inference mechanisms under permutation invariance, locality, and KL-contractivity constraints. We prove uniqueness, convergence, and robustness bounds, and validate the framework on synthetic and real-world aggregation tasks.
 \end{abstract}
 
-\section{Introduction}
+\input{sections/1_introduction}
+\input{sections/2_problem}
+\input{sections/3_method}
+\input{sections/4_theory}
+\input{sections/5_experiments}
+\input{sections/6_real_world}
+\input{sections/7_conclusion}
 
-Distributed truth inference is a fundamental problem in multi-agent systems, decentralized learning, and information aggregation under uncertainty. Existing approaches such as majority voting and classical consensus fail under adversarial conditions or lack probabilistic grounding.
+\bibliographystyle{plain}
+\bibliography{bibliography}
 
-We propose a unified framework combining Bayesian inference and gossip dynamics.
+\appendix
+\input{appendix}
 
-\section{Problem Setup}
+\end{document}
 
-Let $\mathcal{H} = \{h_1, ..., h_k\}$ be a finite hypothesis space. Let $h^* \in \mathcal{H}$ denote the latent truth:
+\section{Method}
 
-\[
-h^* \sim \pi(h)
-\]
+We consider a set of agents $v \in V$ each maintaining belief distributions $p_v(t) \in \Delta^{k-1}$.
 
-Each agent observes:
-
-\[
-o_v \sim P(o \mid h^*)
-\]
-
-and maintains belief:
-
-\[
-p_v(t) \in \Delta^{k-1}
-\]
-
-\section{Generative Model}
-
-Observations are conditionally independent:
+\subsection{Local Bayesian Update}
 
 \[
-o_v \perp o_u \mid h^*
+\hat{p}_v(h) \propto p_v(h) P(o_v | h)
 \]
 
-Byzantine agents produce arbitrary observations:
-
-\[
-o_v \sim Q_v(o)
-\]
-
-\section{Algorithm}
-
-\subsection{Local Update}
-
-\[
-\hat{p}_v(h) =
-\frac{p_v(h) P(o_v \mid h)}
-{\sum_{h'} p_v(h') P(o_v \mid h')}
-\]
-
-\subsection{Gossip Step}
+\subsection{Gossip Mixing}
 
 \[
 p_v(t+1) = \sum_u W_{vu} \hat{p}_u(t)
 \]
 
-\section{Theoretical Results}
-
-\subsection{Local Contraction}
+The full operator is:
 
 \[
-D_{KL}(\hat{p}_v \| p^*) \leq D_{KL}(p_v \| p^*) - \eta \|p_v - \hat{p}_v\|_1^2
+T = W \circ R
 \]
 
-\subsection{Global Contractivity}
+where $R$ is the Bayesian multiplicative update and $W$ is a doubly stochastic matrix.
+
+\section{Theoretical Results}
+
+\subsection{Uniqueness}
+
+Any operator satisfying:
+\begin{itemize}
+\item permutation invariance
+\item locality
+\item KL-contractivity
+\item linear mixing
+\end{itemize}
+
+is equivalent to $T = W \circ R$.
+
+\subsection{Convergence}
 
 Let:
-
 \[
 \Phi(t) = \sum_v D_{KL}(p_v(t) \| p^*)
 \]
 
 Then:
-
 \[
 \Phi(t+1) \leq (1 - \gamma \eta)\Phi(t)
 \]
 
 \subsection{Byzantine Robustness}
 
-If $\beta$ fraction is adversarial:
+If $\beta < \beta^*$, system converges to a perturbed fixed point.
 
+\section{Theoretical Results}
+
+\subsection{Uniqueness}
+
+Any operator satisfying:
+\begin{itemize}
+\item permutation invariance
+\item locality
+\item KL-contractivity
+\item linear mixing
+\end{itemize}
+
+is equivalent to $T = W \circ R$.
+
+\subsection{Convergence}
+
+Let:
 \[
-\Phi(t+1) \leq (1 - \gamma \eta)\Phi(t) + C\beta
+\Phi(t) = \sum_v D_{KL}(p_v(t) \| p^*)
 \]
+
+Then:
+\[
+\Phi(t+1) \leq (1 - \gamma \eta)\Phi(t)
+\]
+
+\subsection{Byzantine Robustness}
+
+If $\beta < \beta^*$, system converges to a perturbed fixed point.
 
 \section{Experiments}
 
-We evaluate:
+We evaluate on synthetic and real-world datasets.
 
+\subsection{Baselines}
 \begin{itemize}
-\item Truth recovery accuracy
-\item KL convergence
-\item Robustness under adversarial injection
-\item Network topology sensitivity
+\item DeGroot consensus
+\item Bayesian averaging
+\item Geometric median
 \end{itemize}
 
-\section{Conclusion}
+\subsection{Results}
 
-We present a contractive distributed inference framework with provable convergence and Byzantine robustness.
-
-\begin{figure}
+\begin{figure}[h]
 \centering
-\includegraphics[width=0.7\linewidth]{fig1_kl.png}
-\caption{KL divergence convergence under different Byzantine ratios}
+\includegraphics[width=0.7\linewidth]{figures/fig1_kl.png}
+\caption{KL convergence under adversarial ratios}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
 \centering
-\includegraphics[width=0.7\linewidth]{fig2_byzantine.png}
-\caption{Final error vs adversarial ratio}
+\includegraphics[width=0.7\linewidth]{figures/fig2_phase_transition.png}
+\caption{Phase transition under Byzantine corruption}
 \end{figure}
 
-\end{document}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\linewidth]{figures/fig3_baselines.png}
+\caption{Comparison with baseline methods}
+\end{figure}
+
+

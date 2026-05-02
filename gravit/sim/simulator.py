@@ -32,3 +32,19 @@ def run_simulation(N=50, K=10, beta=0.2, T=50):
         kl_trace.append(kl(avg, truth))
 
     return kl_trace
+
+def run_real_world(dataset="crowd"):
+
+    from gravit.datasets.loader import load_dataset
+
+    data = load_dataset(dataset)
+
+    if dataset == "crowd":
+        annotations, truth = data.get_annotations()
+    else:
+        annotations, truth = data.corrupt_sources()
+
+    # collapse annotations into belief initialization
+    initial_beliefs = annotations.mean(axis=0)
+
+    return initial_beliefs, truth

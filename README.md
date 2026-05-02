@@ -1,12 +1,12 @@
 # Gravit Truth Consensus (GTC)
 
-Distributed Bayesian inference system with gossip-based consensus and Byzantine robustness.
+A theoretical and empirical framework for distributed truth inference under adversarial noise.
 
 ## Installation
 
 pip install -r requirements.txt
 
-## Run experiment
+## Run experiments
 
 python scripts/run_experiment.py
 
@@ -14,16 +14,19 @@ python scripts/run_experiment.py
 
 python scripts/generate_figures.py
 
+## Run full benchmark
+
+python scripts/benchmark.py
+
+## Build submission
+
+python scripts/build_submission.py
+
 ## Core idea
 
-We model truth as latent variable h* and perform distributed inference via:
-- Bayesian update
-- gossip mixing
-- adversarial robustness
+We characterize the class of distributed inference operators satisfying:
+- permutation invariance
+- locality
+- KL-contractivity
 
-## Structure
-
-- core/: algorithm
-- sim/: simulation
-- scripts/: experiments
-- math/: metrics
+and prove equivalence to Bayesian-gossip composition.
