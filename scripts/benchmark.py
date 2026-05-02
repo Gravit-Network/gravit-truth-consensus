@@ -2,7 +2,8 @@ from gravit.benchmarks.runner import run_all
 
 
 def main():
-    run_all()
+    results = run_all()
+    print(results)
 
 
 if __name__ == "__main__":

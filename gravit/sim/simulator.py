@@ -7,6 +7,7 @@ from gravit.core.consensus import build_gossip_matrix
 from gravit.core.dynamics import GravitSystem
 from gravit.math.metrics import kl
 
+np.random.seed(42)
 
 def run_simulation(N=50, K=10, beta=0.2, T=50):
 

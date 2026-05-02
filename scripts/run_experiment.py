@@ -2,7 +2,8 @@ from gravit.sim.simulator import run_simulation
 
 
 def main():
-    run_simulation()
+    kl = run_simulation()
+    print("Final KL:", kl[-1])
 
 
 if __name__ == "__main__":

@@ -2,9 +2,9 @@ import subprocess
 
 
 def main():
-    subprocess.run(["python", "scripts/generate_figures.py"])
-    subprocess.run(["pdflatex", "main.tex"])
-    subprocess.run(["pdflatex", "main.tex"])
+    subprocess.run(["python", "scripts/generate_figures.py"], check=True)
+    subprocess.run(["pdflatex", "main.tex"], check=True)
+    subprocess.run(["pdflatex", "main.tex"], check=True)
 
 
 if __name__ == "__main__":
