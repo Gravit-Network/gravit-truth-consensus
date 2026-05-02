@@ -1,16 +1,17 @@
+# gravit/sim/simulator.py
+
 import numpy as np
-from gravit.core.agents import Agent
-from gravit.core.consensus import build_stochastic_matrix
+from gravit.core.agent import Agent
+from gravit.core.generative import GenerativeModel
+from gravit.core.consensus import build_gossip_matrix
 from gravit.core.dynamics import GravitSystem
-from gravit.core.generative_model import GenerativeModel
 from gravit.math.metrics import kl
 
-np.random.seed(42)
 
-def run(N=50, K=10, beta=0.2, T=50):
+def run_simulation(N=50, K=10, beta=0.2, T=50):
 
     model = GenerativeModel(K)
-    W = build_stochastic_matrix(N)
+    W = build_gossip_matrix(N)
 
     agents = []
     for i in range(N):
@@ -25,10 +26,9 @@ def run(N=50, K=10, beta=0.2, T=50):
 
     kl_trace = []
 
-    for t in range(T):
+    for _ in range(T):
         P = system.step(h_star)
         avg = np.mean(P, axis=0)
-
         kl_trace.append(kl(avg, truth))
 
     return kl_trace

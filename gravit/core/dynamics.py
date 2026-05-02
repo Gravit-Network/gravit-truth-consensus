@@ -1,5 +1,6 @@
+# gravit/core/dynamics.py
+
 import numpy as np
-from gravit.math.metrics import kl
 
 
 class GravitSystem:
@@ -8,7 +9,6 @@ class GravitSystem:
         self.model = model
         self.W = W
         self.K = K
-
         self.likelihood = np.eye(K) * 0.9 + 0.1 / K
 
     def step(self, h_star):

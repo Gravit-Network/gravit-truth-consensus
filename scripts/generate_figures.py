@@ -1,17 +1,22 @@
-import os
+# scripts/generate_figures.py
+
+import numpy as np
 import matplotlib.pyplot as plt
 from gravit.sim.simulator import run_simulation
 
 
 def main():
-    os.makedirs("figures", exist_ok=True)
 
-    kl = run_simulation(beta=0.2)
+    xs = np.linspace(0, 0.5, 8)
+    ys = []
 
-    plt.plot(kl)
-    plt.yscale("log")
-    plt.title("KL Convergence")
-    plt.savefig("figures/fig1_kl.png")
+    for b in xs:
+        kl = run_simulation(beta=b)
+        ys.append(kl[-1])
+
+    plt.plot(xs, ys)
+    plt.title("Error vs Byzantine ratio")
+    plt.savefig("fig_byzantine.png")
 
 
 if __name__ == "__main__":

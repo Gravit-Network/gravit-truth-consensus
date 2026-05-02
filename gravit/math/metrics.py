@@ -1,4 +1,7 @@
+# gravit/math/metrics.py
+
 import numpy as np
+
 
 def kl(p, q):
     p = np.clip(p, 1e-12, None)
