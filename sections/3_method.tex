@@ -1,0 +1,23 @@
+\section{Method}
+
+We consider a set of agents $v \in V$ each maintaining belief distributions $p_v(t) \in \Delta^{k-1}$.
+
+\subsection{Local Bayesian Update}
+
+\[
+\hat{p}_v(h) \propto p_v(h) P(o_v | h)
+\]
+
+\subsection{Gossip Mixing}
+
+\[
+p_v(t+1) = \sum_u W_{vu} \hat{p}_u(t)
+\]
+
+The full operator is:
+
+\[
+T = W \circ R
+\]
+
+where $R$ is the Bayesian multiplicative update and $W$ is a doubly stochastic matrix.

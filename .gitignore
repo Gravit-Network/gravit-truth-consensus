@@ -1,3 +1,27 @@
 __pycache__/
 *.pyc
 .DS_Store
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.dvi
+main.pdf
+
+# Python build/distribution
+*.pyo
+.eggs/
+*.egg
+*.egg-info
+
+# IDE/Editor
+.vscode/
+.idea/
+*.swp
+*.swo
