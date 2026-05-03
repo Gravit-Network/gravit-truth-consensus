@@ -20,6 +20,4 @@ jobs:
 
       - run: python scripts/run_experiment.py
 
-      - run: python scripts/generate_figures.py
-
-      - run: python scripts/benchmark.py
+      - run: python scripts/plot_results.py
