@@ -2,25 +2,39 @@ import numpy as np
 import networkx as nx
 import os
 from .config import Config
-from .graph import get_metropolis_hastings_W
 from .scoring import honest_scoring
 from .byzantine import apply_byzantine
 from .consensus import GravitConsensus
-from .metrics import compute_phi, compute_avg_distance, entropy
+from .metrics import compute_avg_distance, entropy
 
-def run_full_experiment(beta_list=[0.0, 0.1, 0.2, 0.3], runs=30):
+def run_full_experiment(
+    beta_list=[0.0, 0.1, 0.2, 0.3],
+    runs=30,
+    homogeneous_scoring=False,
+    complete_graph=False,
+    er_p=0.1,
+    T_override=None,
+):
     os.makedirs("results", exist_ok=True)
     results = []
     for beta in beta_list:
         run_data = []
         for r in range(runs):
             config = Config(N=50, k=5, beta=beta, seed=r)
-            G = nx.erdos_renyi_graph(config.N, 0.1, seed=r)
-            W = get_metropolis_hastings_W(G)
+            if T_override is not None:
+                config.T = int(T_override)
+            if complete_graph:
+                G = nx.complete_graph(config.N)
+            else:
+                G = nx.erdos_renyi_graph(config.N, er_p, seed=r)
             consensus = GravitConsensus(config)
             consensus.set_graph(G)
             consensus.p = np.random.dirichlet(np.ones(config.k), config.N)
-            s = honest_scoring(consensus.p, config.m, config.M)
+            if homogeneous_scoring:
+                s_mid = float(0.5 * (config.m + config.M))
+                s = np.full((config.N, config.k), s_mid, dtype=float)
+            else:
+                s = honest_scoring(consensus.p, config.m, config.M)
             s = apply_byzantine(s, config.beta, strategy="constant", p_current=consensus.p)
             p_star, history_phi = consensus.run_until_convergence(s)
             final_phi = history_phi[-1]
