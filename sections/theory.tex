@@ -1,0 +1,19 @@
+\section{Theory}
+
+The system operates on the probability simplex. Each validator maintains \(p_v(t)\). The update operator is
+\[
+T(s)(p) = W \Bigl( p \odot s / \langle p, s \rangle \Bigr).
+\]
+
+Under assumptions A1–A11, the operator is contractive in KL divergence with modulus \(1 - \gamma\eta\), where
+\[
+\eta = \frac12 \left( \frac{m}{M} \right)^2.
+\]
+
+The Lyapunov function \(\Phi(t)\) satisfies
+\[
+\Phi(t+1) \le (1 - \gamma\eta) \Phi(t).
+\]
+
+Byzantine robustness holds for \(\beta < \frac{\gamma\eta}{2\eta + \gamma}\).
+Truthful reporting is the unique strict dominant-strategy equilibrium.
