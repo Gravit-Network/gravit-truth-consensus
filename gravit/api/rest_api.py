@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from market.market_state import MarketState
-from network.graph import create_graph
+from gravit.market.market_state import MarketState
+from gravit.network.graph import create_graph
 
 app = FastAPI()
 state = MarketState(N=10, k=5)
