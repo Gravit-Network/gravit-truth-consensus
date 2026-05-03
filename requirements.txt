@@ -1,4 +1,6 @@
--e .
 numpy
+networkx
 matplotlib
-scipy
+fastapi
+uvicorn
+pydantic
