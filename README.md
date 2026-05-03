@@ -6,3 +6,4 @@ Mathematical framework for decentralized truth convergence.
 ```bash
 pip install -r requirements.txt
 python scripts/run_experiment.py
+python scripts/plot_results.py

@@ -1,6 +1,7 @@
 import numpy as np
 from .operator import T
 from .metrics import compute_phi
+from .graph import get_metropolis_hastings_W
 
 class GravitConsensus:
     def __init__(self, config):
